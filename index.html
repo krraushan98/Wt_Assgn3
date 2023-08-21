@@ -15,57 +15,57 @@
 		<form>
 		<div class="form-group">
 			<label>Name</label>
-			<input type="text" id="name" onkeydown="valid1(event)" class="form-control" required>
+			<input type="text" id="name" oninput="validateAlphabets(this)" class="form-control" required>
 		</div>
 		<div class="form-group">
 			<label>Email</label>
-			<input type="email" name="" class="form-control" required>
+			<input type="email" id="email" class="form-control" required>
 		</div>
 		<div class="form-group">
 			<label>Phone No</label>
-			<input type="text" id="no" onkeydown="valid2(event)" class="form-control" required>
+			<input type="text" id="no" oninput="validNumeric(this)" class="form-control" required>
 		</div>
 		<div class="form-group">
 			<label>Address</label>
-			<input type="text" id="address" onkeypress="countWords()" class="form-control" required>
+			<input type="text" id="address" oninput="countWords(this)" class="form-control" required>
 			<p>Word Left: <span id="wordCount">0</span></p>
 		</div>
 		<input type="submit" class="btn btn-info" value="Submit">
 		</form>
 	</div>
 	<script type="text/javascript">
-		function valid1(e1)
-		{
-			if (!((e1.keyCode>=65 && e1.keyCode<=90)|| e1.keyCode<=32)) 
-			{
+		function validateAlphabets(input) {
+			const regex = /^[A-Za-z ]*$/;
+			if (!regex.test(input.value)) {
 				alert("Enter Alphabets only");
-				document.getElementById('name').value="";
+				input.value = input.value.replace(/[^A-Za-z ]/g, ''); // Remove non-alphabet characters
 			}
-		}
-		function valid2(e2)
-		{
-			const no=document.getElementById("no");
-			if (!((e2.keyCode>=48 && e2.keyCode<=57)|| e2.keyCode<=31))
-			 {
-			 	alert("Enter only numeric values");
-			 }
-			 if(no.value.length>10){
-				alert("number should be 10 digits");
-			 }
 		}
 		
-		function countWords() {
-			const textArea = document.getElementById('address');
-			const wordCountDisplay = document.getElementById('wordCount');
-			const text = textArea.value;
-			const words = text.trim().split(/\s+/); 
-			const wordCount = words.length;
-			if(wordCount>200){
-				alert("word limit exceded");
+		function validNumeric(input) {
+			const no = input.value;
+			if (!/^\d+$/.test(no)) {
+				alert("Enter only numeric values");
+				input.value = no.replace(/\D/g, ''); // Remove non-numeric characters
 			}
-			const leftWord=200-wordCount;
-			wordCountDisplay.textContent = leftWord;
+			if (no.length > 10) {
+				alert("Number should be 10 digits");
+				input.value = no.substring(0, 10); // Trim to 10 digits
+			}
 		}
+		
+		function countWords(input) {
+			const text = input.value;
+			const words = text.trim().split(/\s+/);
+			const wordCount = words.length;
+			if (wordCount > 200) {
+				alert("Word limit exceeded");
+				input.value = text.substring(0, text.lastIndexOf(' ', 200));
+			}
+			const leftWord = 200 - wordCount;
+			document.getElementById('wordCount').textContent = leftWord;
+		}
+		
 	</script>
 </body>
 </html>
