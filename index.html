@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+	
+	<div class="container">
+		<div class="display-4 text-center">Registration</div>
+		<form>
+		<div class="form-group">
+			<label>Name</label>
+			<input type="text" id="name" onkeydown="valid1(event)" class="form-control" required>
+		</div>
+		<div class="form-group">
+			<label>Email</label>
+			<input type="email" name="" class="form-control" required>
+		</div>
+		<div class="form-group">
+			<label>Phone No</label>
+			<input type="text" id="no" onkeydown="valid2(event)" class="form-control" required>
+		</div>
+		<div class="form-group">
+			<label>Address</label>
+			<input type="text" id="address" onkeypress="countWords()" class="form-control" required>
+			<p>Word Left: <span id="wordCount">0</span></p>
+		</div>
+		<input type="submit" class="btn btn-info" value="Submit">
+		</form>
+	</div>
+	<script type="text/javascript">
+		function valid1(e1)
+		{
+			if (!((e1.keyCode>=65 && e1.keyCode<=90)|| e1.keyCode<=32)) 
+			{
+				alert("Enter Alphabets only");
+				document.getElementById('name').value="";
+			}
+		}
+		function valid2(e2)
+		{
+			const no=document.getElementById("no");
+			if (!((e2.keyCode>=48 && e2.keyCode<=57)|| e2.keyCode<=31))
+			 {
+			 	alert("Enter only numeric values");
+			 }
+			 if(no.value.length>10){
+				alert("number should be 10 digits");
+			 }
+		}
+		
+		function countWords() {
+			const textArea = document.getElementById('address');
+			const wordCountDisplay = document.getElementById('wordCount');
+			const text = textArea.value;
+			const words = text.trim().split(/\s+/); 
+			const wordCount = words.length;
+			if(wordCount>200){
+				alert("word limit exceded");
+			}
+			const leftWord=200-wordCount;
+			wordCountDisplay.textContent = leftWord;
+		}
+	</script>
+</body>
+</html>
